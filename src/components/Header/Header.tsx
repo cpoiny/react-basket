@@ -2,8 +2,8 @@ import { useCartContext } from "contexts/Cart.context";
 import { NavLink } from "react-router-dom";
 
 const Header = () => {
-const {products} = useCartContext();
-// const {quantity} =products;
+const {getTotalProduct} = useCartContext();
+//console.log("totalProducts", getTotalProduct)}
 
 
     return(
@@ -16,5 +16,3 @@ const {products} = useCartContext();
 }
 
 export default Header;
-
-/* <NavLink to={navItem.link} className= {({isActive}) => isActive ? style.activeLink: undefined }>{navItem.title} <NavLink /> */

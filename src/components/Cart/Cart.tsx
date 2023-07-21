@@ -1,16 +1,16 @@
- //import { useCartContext } from "contexts/Cart.context";
+import { useCartContext } from "contexts/Cart.context";
 
 const Cart = () => {
-   //   const cartContext = useCartContext;
-
-
+const {products} = useCartContext();
 
     return (
         <main>
-            <p>Produit</p>
-            <p>Quantité</p>
-        </main>
-    )
-}
+            <ul>
+            {products.map((product)=>
+            <li key={product.id}>Article : {product.product.title} - Quantité : {product.quantity} </li>
+            )}
+               </ul>
+               </main>
+)}
 
 export default Cart;

@@ -13,14 +13,14 @@ interface ICartProduct {
 interface ICart {
     products : ICartProduct[];
     addToCart : (product: IProduct, quantity: number) => void;
-    // getTotalProduct : () => void
+     getTotalProduct : () => void
 }
 
 /* Initialisation d'un panier par défaut */
 const defaultCart: ICart = {
     products : [],
     addToCart: () => {},
-    // getTotalProduct:() => {}
+    getTotalProduct:() => 0
 }
 
 /* Initialisation d'un contexte */
@@ -36,24 +36,40 @@ export const CartProvider = (props: CartProviderProps) => {
     const {children} = props;
     const [cartProducts, setCartProducts] = useState<ICartProduct []>([]);
 
-/* fonction add to cart */
+/* function add to cart */
     const addToCart = (product: IProduct, quantity: number) => {
         const newProduct = {
             id: uuidv4(),
             product,
             quantity
         }
-        setCartProducts(cartProducts => [...cartProducts,newProduct]);
+        /* check if product exist in the cart */
+        const foundProduct = cartProducts.find((p)=> p.product === newProduct.product);
+
+        if (!foundProduct) {
+            setCartProducts([...cartProducts,newProduct]);
+        } else {
+             /* add quantity */ 
+            foundProduct.quantity += 1;
+            setCartProducts([...cartProducts]);
+        }
         console.log(cartProducts);
     }
 
-    // const getTotalProduct = () => {
-    // }
+/* function to get the total quantity of the cart */
+     const getTotalProduct = () => {
+       const totalProducts = cartProducts.reduce((accumulator:number, currentValue:ICartProduct) => {
+            return accumulator += currentValue.quantity;
+        },0);
+        console.log("totalQuantity", totalProducts);
+
+        }
+    
 
     const cart: ICart = {
         products: cartProducts,
         addToCart,
-        // getTotalProduct
+        getTotalProduct
     }
 
 return <CartContext.Provider value={cart}>
