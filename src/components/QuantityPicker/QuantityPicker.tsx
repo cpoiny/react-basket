@@ -1,28 +1,37 @@
-import { useState } from "react";
 import style from "./QuantityPicker.module.css";
+import { useCartContext } from "contexts/Cart.context";
 
-const QuantityPicker = () => {
-    const [quantity, setQuantity] = useState(0);
-    const addOne = () => {
-        const newQuantity = quantity + 1;
-        setQuantity(newQuantity);
-    }
+interface QuantityPickerProps {
+    quantity: number;
+    add: () => void;
+    remove: () => void
+}
 
-    const removeOne = () => {
-        if (quantity <= 0) return;
-        const newQuantity = quantity - 1;
-        setQuantity(newQuantity);
-    }
 
-    
+const QuantityPicker = (props: QuantityPickerProps) => {
+    const {quantity, add, remove } = props;
+
+
+  //  const { products, addOne } = useCartContext();
+
+    // const addOne = () => {
+    //     const newQuantity = quantity + 1;
+    //     setQuantity(newQuantity);
+    // }
+
+    // const removeOne = () => {
+    //     if (quantity <= 0) return;
+    //     const newQuantity = quantity - 1;
+    //     setQuantity(newQuantity);
+    // }
+
+
     return (
         <div className={style.flex}>
-            <button onClick={removeOne}> - </button>
+            <button onClick={remove}> - </button>
             <p>{quantity}</p>
-            <button onClick={addOne}>+</button>
+            <button onClick={add}> + </button>
         </div>
-
-
     )
 }
 

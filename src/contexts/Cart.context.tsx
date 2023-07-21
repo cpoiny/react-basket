@@ -12,15 +12,17 @@ interface ICartProduct {
 /* Interface panier */ 
 interface ICart {
     products : ICartProduct[];
-    addToCart : (product: IProduct, quantity: number) => void;
-     getTotalProduct : () => void
+    addOne : (product: IProduct, quantity: number) => void;
+     getTotalProduct : () => void,
+     resetCart : () => void
 }
 
 /* Initialisation d'un panier par défaut */
 const defaultCart: ICart = {
     products : [],
-    addToCart: () => {},
-    getTotalProduct:() => 0
+    addOne: () => {},
+    getTotalProduct:() => 0,
+    resetCart: () => {}
 }
 
 /* Initialisation d'un contexte */
@@ -37,7 +39,7 @@ export const CartProvider = (props: CartProviderProps) => {
     const [cartProducts, setCartProducts] = useState<ICartProduct []>([]);
 
 /* function add to cart */
-    const addToCart = (product: IProduct, quantity: number) => {
+    const addOne = (product: IProduct, quantity: number) => {
         const newProduct = {
             id: uuidv4(),
             product,
@@ -55,8 +57,22 @@ export const CartProvider = (props: CartProviderProps) => {
         }
         console.log(cartProducts);
     }
+    
+    /* Function to remove a product */
+    
+    const removeProduct= (product: IProduct) => {
+        const foundProduct = cartProducts.find((p)=> p.product.id === product.id);
+        if (!foundProduct) return;
+        const index = cartProducts.indexOf(foundProduct);
+        console.log("index product to remove", index);
 
-/* function to get the total quantity of the cart */
+
+    }
+
+
+
+
+/* function to get the total quantity of the cart  - WIP */
      const getTotalProduct = () => {
        const totalProducts = cartProducts.reduce((accumulator:number, currentValue:ICartProduct) => {
             return accumulator += currentValue.quantity;
@@ -64,12 +80,23 @@ export const CartProvider = (props: CartProviderProps) => {
         console.log("totalQuantity", totalProducts);
 
         }
+
+
     
+/* function to reset cart */
+    const resetCart = () => {
+       // console.log("panier avant", cart);
+        setCartProducts([]);
+       // console.log("panier apres reset", cart);
+    }
+
+
 
     const cart: ICart = {
         products: cartProducts,
-        addToCart,
-        getTotalProduct
+        addOne,
+        getTotalProduct,
+        resetCart
     }
 
 return <CartContext.Provider value={cart}>

@@ -3,23 +3,17 @@ import Button from "../Button"
 import QuantityPicker from "components/QuantityPicker/QuantityPicker";
 import { useCartContext } from "contexts/Cart.context";
 import Cart from "components/Cart/Cart";
+import ProductCard from "components/ProductCard/ProductCard";
 
 const Products = () => {
-        const {addToCart} = useCartContext();
-        // penser a destructurer cart
-        // console.log(products, "cartprovider");
-
-
+    const { addOne } = useCartContext();
 
     return (
         <ul>
-            {PRODUCTS.map((product) => <li key={product.id}>
-                {product.title} - {product.price}€
-                {/* <QuantityPicker /> */}
-                <br></br>
-                <button onClick={()=>addToCart(product,1)}>Ajouter au panier</button>
-               
-            </li>)}
+            {PRODUCTS.map((product) =>
+                <li key={product.id}>
+                    <ProductCard product={product} />
+                </li>)}
         </ul>
     )
 }
