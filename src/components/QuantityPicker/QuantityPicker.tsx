@@ -1,5 +1,4 @@
 import style from "./QuantityPicker.module.css";
-import { useCartContext } from "contexts/Cart.context";
 
 interface QuantityPickerProps {
     quantity: number;

@@ -1,16 +1,26 @@
-import QuantityPicker from "components/QuantityPicker/QuantityPicker";
 import { useCartContext } from "contexts/Cart.context";
 
 const Cart = () => {
-    const { products, resetCart } = useCartContext();
-    const reset = () => resetCart();
 
+        
+    const { products, resetCart, removeProduct } = useCartContext();
+    const reset = () => resetCart();
+    const add = () => {
+        
+    }
+   
     return (
         <main>
             <ul>
                 {products.map((product) =>
-                    <li key={product.id}>Article : {product.product.title} - Quantité : {product.quantity}
+                    <li key={product.id}>Article : {product.product.title} - Quantité :  {product.quantity}
+                   <br />
+                    <button onClick={() => removeProduct(product.product)}>X</button>
+                   
+                    
+                    
                     </li>
+                    
                 )}
             </ul>
 
