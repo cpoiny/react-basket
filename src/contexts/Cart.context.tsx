@@ -14,9 +14,10 @@ interface ICart {
     products: ICartProduct[];
     addOne: (product: IProduct, quantity: number) => void;
     getTotalProduct: () => number;
+    getTotalPrice: () => number;
     resetCart: () => void;
     removeOne: (product : IProduct) => void;
-    removeProduct: (product: IProduct) => void
+    removeProduct: (product: IProduct) => void;
 }
 
 /* Initialisation d'un panier par défaut */
@@ -24,9 +25,10 @@ const defaultCart: ICart = {
     products: [],
     addOne: () => { },
     getTotalProduct: () => 0,
+    getTotalPrice: () => 0,
     resetCart: () => {},
     removeOne : () => {},
-    removeProduct : () => {}
+    removeProduct : () => {},
 }
 
 /* Initialisation d'un contexte */
@@ -62,7 +64,7 @@ export const CartProvider = (props: CartProviderProps) => {
         console.log(cartProducts);
     }
 
-    /* Function to remove quantity of a product */
+    /* Ok - Function to remove quantity of a product */
 
     const removeOne = (product: IProduct) => {
         const foundProduct = cartProducts.find((p) => p.product.id === product.id);
@@ -104,6 +106,15 @@ export const CartProvider = (props: CartProviderProps) => {
 
     }
 
+    /* Function to get the total quantity of the cart  - WIP */
+        const getTotalPrice = () => {
+            const totalPrice = cartProducts.reduce((accumulator: number, currentValue: ICartProduct) => {
+                return accumulator += (currentValue.product.price * currentValue.quantity);
+            }, 0);
+        return totalPrice;
+    
+        }
+
     /* Ok - Function to reset cart */
     const resetCart = () => {
         setCartProducts([]);
@@ -114,9 +125,10 @@ export const CartProvider = (props: CartProviderProps) => {
         products: cartProducts,
         addOne,
         getTotalProduct,
+        getTotalPrice,
         resetCart,
         removeOne,
-        removeProduct
+        removeProduct,
     }
 
     return <CartContext.Provider value={cart}>
