@@ -13,22 +13,22 @@ interface ICartProduct {
 interface ICart {
     products: ICartProduct[];
     addOne: (product: IProduct, quantity: number) => void;
+    removeOne: (product : IProduct) => void;
+    removeProduct: (product: IProduct) => void;
     getTotalProduct: () => number;
     getTotalPrice: () => number;
     resetCart: () => void;
-    removeOne: (product : IProduct) => void;
-    removeProduct: (product: IProduct) => void;
 }
 
 /* Initialisation d'un panier par défaut */
 const defaultCart: ICart = {
     products: [],
     addOne: () => { },
+    removeOne : () => {},
+    removeProduct : () => {},
     getTotalProduct: () => 0,
     getTotalPrice: () => 0,
     resetCart: () => {},
-    removeOne : () => {},
-    removeProduct : () => {},
 }
 
 /* Initialisation d'un contexte */
@@ -37,7 +37,7 @@ const CartContext = createContext<ICart>(defaultCart);
 
 /* Provider */
 interface CartProviderProps {
-    children: JSX.Element
+    children: JSX.Element;
 }
 
 export const CartProvider = (props: CartProviderProps) => {
@@ -65,7 +65,6 @@ export const CartProvider = (props: CartProviderProps) => {
     }
 
     /* Ok - Function to remove quantity of a product */
-
     const removeOne = (product: IProduct) => {
         const foundProduct = cartProducts.find((p) => p.product.id === product.id);
         
@@ -86,7 +85,7 @@ export const CartProvider = (props: CartProviderProps) => {
         console.log("index", index);
     }
 
-    /*  Ok - Function to remove all the product of the card */
+    /*  Ok - Function to remove all the product of the cart */
     const removeProduct = (product : IProduct) => {
         const foundProduct = cartProducts.find((p) => p.product.id === product.id);
         if(foundProduct) {
@@ -97,7 +96,7 @@ export const CartProvider = (props: CartProviderProps) => {
     return cartProducts;
 }
 
-    /* OK - Function to get the total quantity of the cart  - WIP */
+    /* OK - Function to get the total quantity of the cart */
     const getTotalProduct = () => {
         const totalProducts = cartProducts.reduce((accumulator: number, currentValue: ICartProduct) => {
             return accumulator += currentValue.quantity;
@@ -106,7 +105,7 @@ export const CartProvider = (props: CartProviderProps) => {
 
     }
 
-    /* Function to get the total quantity of the cart  - WIP */
+    /* Function to get the total price of the cart */
         const getTotalPrice = () => {
             const totalPrice = cartProducts.reduce((accumulator: number, currentValue: ICartProduct) => {
                 return accumulator += (currentValue.product.price * currentValue.quantity);
@@ -124,11 +123,11 @@ export const CartProvider = (props: CartProviderProps) => {
     const cart: ICart = {
         products: cartProducts,
         addOne,
-        getTotalProduct,
-        getTotalPrice,
-        resetCart,
         removeOne,
         removeProduct,
+        getTotalProduct,
+        getTotalPrice,
+        resetCart
     }
 
     return <CartContext.Provider value={cart}>
