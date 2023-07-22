@@ -1,10 +1,7 @@
-import { PRODUCTS } from "mocks/products"
-import { useCartContext } from "contexts/Cart.context";
+import { PRODUCTS } from "mocks/products";
 import ProductCard from "components/ProductCard/ProductCard";
 
 const Products = () => {
-    const { addOne } = useCartContext();
-
     return (
         <ul>
             {PRODUCTS.map((product) =>

@@ -3,7 +3,7 @@ import ProductCard from "components/ProductCard/ProductCard"
 const ProductDetailsPage = () => {
     return (
         <main>
-            {/* <ProductCard /> */}
+            <h1>Products details</h1>
         </main>
     )
 }

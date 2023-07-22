@@ -13,7 +13,7 @@ interface ICartProduct {
 interface ICart {
     products: ICartProduct[];
     addOne: (product: IProduct, quantity: number) => void;
-    removeOne: (product : IProduct) => void;
+    removeOne: (product: IProduct) => void;
     removeProduct: (product: IProduct) => void;
     getTotalProduct: () => number;
     getTotalPrice: () => number;
@@ -24,11 +24,11 @@ interface ICart {
 const defaultCart: ICart = {
     products: [],
     addOne: () => { },
-    removeOne : () => {},
-    removeProduct : () => {},
+    removeOne: () => { },
+    removeProduct: () => { },
     getTotalProduct: () => 0,
     getTotalPrice: () => 0,
-    resetCart: () => {},
+    resetCart: () => { },
 }
 
 /* Initialisation d'un contexte */
@@ -44,7 +44,7 @@ export const CartProvider = (props: CartProviderProps) => {
     const { children } = props;
     const [cartProducts, setCartProducts] = useState<ICartProduct[]>([]);
 
-    /* Ok - Function add to cart */
+    /* Function add product(s) to cart */
     const addOne = (product: IProduct, quantity: number) => {
         const newProduct = {
             id: uuidv4(),
@@ -64,61 +64,60 @@ export const CartProvider = (props: CartProviderProps) => {
         console.log(cartProducts);
     }
 
-    /* Ok - Function to remove quantity of a product */
+    /* Function to remove quantity from a product */
     const removeOne = (product: IProduct) => {
         const foundProduct = cartProducts.find((p) => p.product.id === product.id);
-        
+
         console.log("found", foundProduct);
-        if(!foundProduct){
+        if (!foundProduct) {
             return;
         } else {
-            if(foundProduct.quantity > 1) {
+            if (foundProduct.quantity > 1) {
                 foundProduct.quantity -= 1;
                 setCartProducts([...cartProducts]);
             } else {
                 removeProduct(product);
                 setCartProducts([...cartProducts]);
             }
-            
+
         }
         const index = cartProducts.indexOf(foundProduct);
         console.log("index", index);
     }
 
-    /*  Ok - Function to remove all the product of the cart */
-    const removeProduct = (product : IProduct) => {
+    /*  Function to remove a product from the cart */
+    const removeProduct = (product: IProduct) => {
         const foundProduct = cartProducts.find((p) => p.product.id === product.id);
-        if(foundProduct) {
+        if (foundProduct) {
             const index = cartProducts.indexOf(foundProduct);
             cartProducts.splice(index, 1);
             setCartProducts([...cartProducts]);
+        }
+        return cartProducts;
     }
-    return cartProducts;
-}
 
-    /* OK - Function to get the total quantity of the cart */
+    /* Function to get the total quantity of the cart */
     const getTotalProduct = () => {
         const totalProducts = cartProducts.reduce((accumulator: number, currentValue: ICartProduct) => {
             return accumulator += currentValue.quantity;
         }, 0);
-    return totalProducts;
+        return totalProducts;
 
     }
 
     /* Function to get the total price of the cart */
-        const getTotalPrice = () => {
-            const totalPrice = cartProducts.reduce((accumulator: number, currentValue: ICartProduct) => {
-                return accumulator += (currentValue.product.price * currentValue.quantity);
-            }, 0);
+    const getTotalPrice = () => {
+        const totalPrice = cartProducts.reduce((accumulator: number, currentValue: ICartProduct) => {
+            return accumulator += (currentValue.product.price * currentValue.quantity);
+        }, 0);
         return totalPrice;
-    
-        }
 
-    /* Ok - Function to reset cart */
+    }
+
+    /* Function to reset the cart */
     const resetCart = () => {
         setCartProducts([]);
     }
-
 
     const cart: ICart = {
         products: cartProducts,

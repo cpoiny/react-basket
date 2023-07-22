@@ -1,9 +1,9 @@
 interface ButtonProps {
-    title : string
+    title: string
 }
 
 const Button = (props: ButtonProps) => {
-    const {title} = props;
+    const { title } = props;
     return (
         <button>{title}</button>
     )

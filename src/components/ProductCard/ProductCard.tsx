@@ -4,17 +4,15 @@ import { IProduct } from "mocks/products";
 import { useState } from "react";
 
 interface ProductCardProps {
-    product : IProduct;
+    product: IProduct;
 }
 
 const ProductCard = (props: ProductCardProps) => {
 
-    const {product} = props;
-    const {title, price} = product;
-    const {addOne} = useCartContext();
+    const { product } = props;
+    const { title, price } = product;
+    const { addOne } = useCartContext();
     const [quantity, setQuantity] = useState(1);
-
-    
 
     const add = () => {
         const newQuantity = quantity + 1;
@@ -27,16 +25,12 @@ const ProductCard = (props: ProductCardProps) => {
         setQuantity(newQuantity);
     }
 
-    return(
+    return (
         <main>
-              {title} - {price}€
-            
+            {title} - {price}€
             <QuantityPicker quantity={quantity} add={add} remove={remove} />
             <br></br>
-        
-            <button onClick={()=>addOne(product,quantity)}>Ajouter au panier</button>
-           
-    
+            <button onClick={() => addOne(product, quantity)}>Ajouter au panier</button>
         </main>
     )
 }

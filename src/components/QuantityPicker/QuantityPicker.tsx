@@ -8,22 +8,7 @@ interface QuantityPickerProps {
 
 
 const QuantityPicker = (props: QuantityPickerProps) => {
-    const {quantity, add, remove } = props;
-
-
-  //  const { products, addOne } = useCartContext();
-
-    // const addOne = () => {
-    //     const newQuantity = quantity + 1;
-    //     setQuantity(newQuantity);
-    // }
-
-    // const removeOne = () => {
-    //     if (quantity <= 0) return;
-    //     const newQuantity = quantity - 1;
-    //     setQuantity(newQuantity);
-    // }
-
+    const { quantity, add, remove } = props;
 
     return (
         <div className={style.flex}>

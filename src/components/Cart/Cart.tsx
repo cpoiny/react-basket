@@ -3,10 +3,8 @@ import { useCartContext } from "contexts/Cart.context";
 
 
 const Cart = () => {
-
     const { products, resetCart, removeProduct, removeOne, addOne } = useCartContext();
     const reset = () => resetCart();
-
     return (
         <main>
             <ul>

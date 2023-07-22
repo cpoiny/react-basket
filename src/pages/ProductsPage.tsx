@@ -5,7 +5,6 @@ const ProductsPage = () => {
         <main>
             <h1>Products</h1>
             <Products />
-            
         </main>
     )
 }
