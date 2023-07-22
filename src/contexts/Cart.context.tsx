@@ -42,7 +42,7 @@ export const CartProvider = (props: CartProviderProps) => {
     const { children } = props;
     const [cartProducts, setCartProducts] = useState<ICartProduct[]>([]);
 
-    /* function add to cart */
+    /* Ok - Function add to cart */
     const addOne = (product: IProduct, quantity: number) => {
         const newProduct = {
             id: uuidv4(),
@@ -62,7 +62,7 @@ export const CartProvider = (props: CartProviderProps) => {
         console.log(cartProducts);
     }
 
-    /* Function to remove a product */
+    /* Function to remove quantity of a product */
 
     const removeOne = (product: IProduct) => {
         const foundProduct = cartProducts.find((p) => p.product.id === product.id);
@@ -73,8 +73,10 @@ export const CartProvider = (props: CartProviderProps) => {
         } else {
             if(foundProduct.quantity > 1) {
                 foundProduct.quantity -= 1;
+                setCartProducts([...cartProducts]);
             } else {
-                return;
+                removeProduct(product);
+                setCartProducts([...cartProducts]);
             }
             
         }
@@ -82,21 +84,18 @@ export const CartProvider = (props: CartProviderProps) => {
         console.log("index", index);
     }
 
-    /* Fonction to remove all the product of the card */
-    /* WIP - mettre à jour l'affichage du panier sur la page cart pour remove l'element */
+    /*  Ok - Function to remove all the product of the card */
     const removeProduct = (product : IProduct) => {
         const foundProduct = cartProducts.find((p) => p.product.id === product.id);
         if(foundProduct) {
             const index = cartProducts.indexOf(foundProduct);
             cartProducts.splice(index, 1);
-            console.log("newCart", cartProducts);
+            setCartProducts([...cartProducts]);
     }
     return cartProducts;
 }
 
-
-
-    /* function to get the total quantity of the cart  - WIP */
+    /* OK - Function to get the total quantity of the cart  - WIP */
     const getTotalProduct = () => {
         const totalProducts = cartProducts.reduce((accumulator: number, currentValue: ICartProduct) => {
             return accumulator += currentValue.quantity;
@@ -105,8 +104,7 @@ export const CartProvider = (props: CartProviderProps) => {
 
     }
 
-
-    /* function to reset cart */
+    /* Ok - Function to reset cart */
     const resetCart = () => {
         setCartProducts([]);
     }

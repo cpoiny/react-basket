@@ -1,26 +1,27 @@
 import { useCartContext } from "contexts/Cart.context";
+import { IProduct } from "mocks/products";
+import { useState } from "react";
+
 
 const Cart = () => {
-
-        
-    const { products, resetCart, removeProduct } = useCartContext();
-    const reset = () => resetCart();
-    const add = () => {
-        
-    }
    
+    const { products, resetCart, removeProduct, removeOne, addOne } = useCartContext();
+    const reset = () => resetCart();
+
+
     return (
         <main>
             <ul>
-                {products.map((product) =>
-                    <li key={product.id}>Article : {product.product.title} - Quantité :  {product.quantity}
-                   <br />
-                    <button onClick={() => removeProduct(product.product)}>X</button>
-                   
-                    
-                    
+                {products.map((p) =>
+                    <li key={p.id}>Article : {p.product.title} - Quantité :  {p.quantity}
+                        <br />
+                        <button onClick={() => removeOne(p.product)}>-</button>
+                        <p>{p.quantity}</p>
+                        <button onClick={() => addOne(p.product, p.quantity)}>+</button>
+                        <br /><br />
+                        <button onClick={() => removeProduct(p.product)}>X</button>
                     </li>
-                    
+
                 )}
             </ul>
 
